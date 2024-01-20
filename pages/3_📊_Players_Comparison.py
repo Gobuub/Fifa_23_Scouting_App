@@ -17,7 +17,7 @@ cols = ['ID', 'Name', 'FullName', 'Nationality', 'BestPosition', 'Club', 'Nation
         'Positioning', 'Vision', 'Penalties', 'Composure', 'Marking', 'StandingTackle', 'SlidingTackle', 'GKDiving',
         'GKHandling', 'GKKicking', 'GKPositioning', 'GKReflexes', 'GKRating', 'PhotoUrl']
 
-df_stats = pd.read_csv(r"data\players_fifa23.csv")
+df_stats = pd.read_csv("data/players_fifa23.csv")
 
 df_stats = eda.replace_accents(df_stats, cols)
 

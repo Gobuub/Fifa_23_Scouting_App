@@ -9,7 +9,7 @@ st.set_page_config(layout='centered', page_icon='📈', page_title='Players Dash
 
 st.write("# Players Dashboards 📈")
 
-df1 = pd.read_csv(r"data\players_fifa23.csv")
+df1 = pd.read_csv("data/players_fifa23.csv")
 
 cols = ['ID', 'Name', 'FullName','Nationality','BestPosition', 'Club', 'NationalTeam', 'PreferredFoot', 'Age', 'Height',
         'Weight','Overall', 'Potential', 'Growth', 'PaceTotal','ShootingTotal','PassingTotal','DribblingTotal',
@@ -19,7 +19,7 @@ cols = ['ID', 'Name', 'FullName','Nationality','BestPosition', 'Club', 'National
         'GKHandling', 'GKKicking', 'GKPositioning', 'GKReflexes','GKRating', 'PhotoUrl']
 
 df1 = eda.replace_accents(df1, cols)
-df = eda.replace_accents(pd.read_csv(r"data\players_distance_vr_1.csv"))
+df = eda.replace_accents(pd.read_csv("data/players_distance_vr_1.csv"))
 
 player = st.selectbox('Buscar Jugador', df1['Name'].to_list())
 
@@ -48,9 +48,9 @@ with col4:
     foot = stats.PreferredFoot.values[0]
     st.write('### Prefered Foot')
     if foot == 'Right':
-        foot_image = Image.open(r"data\images\pie_derecho.png")
+        foot_image = Image.open("data/images/pie_derecho.png")
     else:
-        foot_image = Image.open(r"data\images\pie_izquierdo.png")
+        foot_image = Image.open("data/images/pie_izquierdo.png")
     st.image(foot_image)
 
 with col5:

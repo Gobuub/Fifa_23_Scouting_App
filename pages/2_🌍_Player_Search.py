@@ -10,8 +10,8 @@ st.set_page_config(layout='centered', page_icon='🌍', page_title='PLayer Searc
 
 st.write("# Players Search 🌍")
 
-df = pd.read_csv(r'data\players_distance_vr_1.csv')
-df_stats = pd.read_csv(r"data\players_fifa23.csv")
+df = pd.read_csv('data/players_distance_vr_1.csv')
+df_stats = pd.read_csv("data/players_fifa23.csv")
 
 player = st.selectbox('Buscar Jugador', set(df.player.to_list()))
 
