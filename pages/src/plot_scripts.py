@@ -1,9 +1,22 @@
-import pandas as pd
-
 import matplotlib.pyplot as plt
 from highlight_text import fig_text
+from PIL import Image
+import requests
+from io import BytesIO
 
-from mplsoccer import PyPizza
+from mplsoccer import PyPizza, add_image
+
+
+def open_image_internet(url_adress):
+    response = requests.get(url_adress)  # Send http request to the url adress
+
+    # Make sure everything went right
+    if response.status_code == 200:
+        image_bytes = BytesIO(response.content)  # Get content
+        image = Image.open(image_bytes)  # Open the image
+        return image  # Output
+    else:
+        print("Failed to download image:", response.status_code)
 
 
 def plot_pizza_chart_comparison(df, player1, player2, params=None, params_offset=None) -> PyPizza:
@@ -81,7 +94,7 @@ def plot_pizza_chart_comparison(df, player1, player2, params=None, params_offset
     # add subtitle
     fig.text(
         0.515, 0.942,
-        "Season 2022-23",
+        "Percentile Rank | Season 2022-23",
         size=15,
         ha="center",
         color="#000000"
@@ -96,6 +109,48 @@ def plot_pizza_chart_comparison(df, player1, player2, params=None, params_offset
         color="#000000",
         ha="right"
     )
+
+    ## Add players photo to plot
+    photo_p1 = df[df.Name == player1]['PhotoUrl'].values[0]
+    photo_p2 = df[df.Name == player2]['PhotoUrl'].values[0]
+
+    image1 = open_image_internet(photo_p1)
+    image2 = open_image_internet(photo_p2)
+
+    # Define the position and size parameters for first photo
+    image1_xaxis = 0
+    image1_yaxis = 0.85
+    image1_width = 0.15
+    image1_height = 0.15  # Same as width since our logo is a square
+
+    # Define the position for the image axes for first image
+    ax_image1 = fig.add_axes([image1_xaxis,
+                              image1_yaxis,
+                              image1_width,
+                              image1_height]
+                             )
+
+    # Display the image for first image
+    ax_image1.imshow(image1)
+    ax_image1.axis('off')  # Remove axis of the image
+
+    # Define the position and size parameters for second image
+    image2_xaxis = 0.85
+    image2_yaxis = 0.85
+    image2_width = 0.15
+    image2_height = 0.15  # Same as width since our logo is a square
+
+    # Define the position for the image axes for second image
+    ax_image2 = fig.add_axes([image2_xaxis,
+                              image2_yaxis,
+                              image2_width,
+                              image2_height]
+                             )
+
+    # Display the image for second image
+    ax_image2.imshow(image2)
+    ax_image2.axis('off')  # Remove axis of the image
+
     plt.savefig('comparison_chart.png')
 
     plt.show()
@@ -212,6 +267,16 @@ def plot_player_info(df, player, params=None):
             transform=fig.transFigure, figure=fig
         ),
     ])
+
+    # Add players photo to plot
+    photo_p = df[df.Name == player]['PhotoUrl'].values[0]
+
+    image1 = open_image_internet(photo_p)
+
+    # add image
+    ax_image = add_image(
+        image1, fig, left=0.462, bottom=0.455, width=0.1, height=0.1
+    )  # these values might differ when you are plotting
 
     plt.savefig('info.png')
 

@@ -19,7 +19,7 @@ cols = ['ID', 'Name', 'FullName', 'Nationality', 'BestPosition', 'Club', 'Nation
 
 df_stats = pd.read_csv("data/players_fifa23.csv")
 
-df_stats = eda.replace_accents(df_stats, cols)
+df_stats = eda.rename_cols(df_stats, cols)
 
 player1 = st.selectbox('Buscar Jugador', set(df_stats.Name.to_list()))
 
@@ -77,3 +77,12 @@ with c5:
 
 plots.plot_pizza_chart_comparison(df_stats, player1, player2)
 st.image('comparison_chart.png')
+
+with open("comparison_chart.png", 'rb') as file:
+
+    button = st.download_button(
+        label='Donwnload Image',
+        data=file,
+        file_name=f'{player1}_vs_{player2}_info.png',
+        mime= "image/png"
+    )

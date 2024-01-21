@@ -17,3 +17,17 @@ def replace_accents(df: pd.DataFrame, cols: list = None) -> pd.DataFrame:
                         regex=True)
 
     return df
+
+
+def rename_cols(df: pd.DataFrame, cols: list = None) -> pd.DataFrame:
+    if cols:
+
+        df = df[cols]
+        for c in df.columns:
+            if 'Total' in c:
+                df = df.rename(columns={c: c.split('Total')[0]})
+    else:
+
+        pass
+
+    return df

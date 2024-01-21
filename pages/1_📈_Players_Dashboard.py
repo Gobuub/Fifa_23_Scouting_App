@@ -18,8 +18,8 @@ cols = ['ID', 'Name', 'FullName','Nationality','BestPosition', 'Club', 'National
         'Positioning', 'Vision','Penalties', 'Composure', 'Marking', 'StandingTackle', 'SlidingTackle','GKDiving',
         'GKHandling', 'GKKicking', 'GKPositioning', 'GKReflexes','GKRating', 'PhotoUrl']
 
-df1 = eda.replace_accents(df1, cols)
-df = eda.replace_accents(pd.read_csv("data/players_distance_vr_1.csv"))
+df1 = eda.rename_cols(df1, cols)
+df = eda.rename_cols(pd.read_csv("data/players_distance_vr_1.csv"))
 
 player = st.selectbox('Buscar Jugador', df1['Name'].to_list())
 
@@ -82,3 +82,12 @@ st.divider()
 
 plots.plot_player_info(df1, player)
 st.image('info.png')
+
+with open("info.png", 'rb') as file:
+
+    button = st.download_button(
+        label='Donwnload Image',
+        data=file,
+        file_name=f'{player}_info.png',
+        mime= "image/png"
+    )
